@@ -12,6 +12,10 @@
             </div>
         @endif
 
+        <div class="mb-4">
+
+            <a href="{{ route('products.create') }}" class="btn btn-primary">+ Add Product</a>
+        </div>
         <div class="mb-4 flex items-center justify-between">
             <div class="flex-1 mr-4">
                 <input
