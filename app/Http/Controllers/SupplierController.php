@@ -31,7 +31,7 @@ class SupplierController extends Controller
             'address'=>'required'
         ]);
         Supplier::create($request->all());
-        return redirect()->route('suppliers')->with('success','Supplier Is Created!!');
+        return redirect()->route('suppliers')->with('status','Supplier Is Created!!');
     }
     public function edit(int $id){
         $supplierData=Supplier::findOrFail($id);
@@ -50,11 +50,11 @@ class SupplierController extends Controller
             'phone'=>$request->phone,
             'address'=>$request->address
         ]);
-        return redirect()->route('suppliers')->with('success','Category Updated Successfylly...');
+        return redirect()->route('suppliers')->with('status','Category Updated Successfylly...');
     }
     public function destroy(int $id){
         $supplier=Supplier::findOrFail($id);
         $supplier->delete();
-        return response()->json(['success'=>'Supplier Deleted!']);
+        return response()->json(['status'=>'Supplier Deleted!']);
     }
 }

@@ -89,7 +89,7 @@ class ProductController extends Controller
     public function destroy(Request $request, int $id){
         $deleteProduct=Product::findOrFail($id);
         $deleteProduct->delete();
-        return response()->json(['success'=>'Product Deleted']);
+        return response()->json(['status'=>'Product Deleted']);
     }
 
 }

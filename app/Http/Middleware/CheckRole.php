@@ -16,15 +16,24 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Skip redirection if the user is already on the customer route
-        if (Auth::check() && Auth::user()->role == 'customer') {
-            if ($request->is('orders/products')) {
-                return $next($request); // Allow access to the customer route
+        if (Auth::check() && Auth::user()->role === 'customer') {
+            $allowedRoutes = [
+                'orders/products',
+                'orders/cart',
+                'orders/checkout',
+            ];
+
+            if ($request->is('orders/*/add-to-cart') && $request->method() === 'POST') {
+                return $next($request);
             }
-
-            return redirect('orders/products'); // Redirect customers to their dashboard
+            // Check if the current request matches any allowed routes
+            foreach ($allowedRoutes as $route) {
+                if ($request->is($route)) {
+                    return $next($request);
+                }
+            }
+            return redirect('orders/products');
         }
-
         return $next($request);
     }
 }

@@ -29,7 +29,7 @@ class OrderItemController extends Controller
             ];
         }
         session()->put('cart',$cart);
-        return redirect()->route('orders.cart');
+        return redirect()->route('orders.cart')->with('status', 'Product added to cart!');
 
     }
     public function showCart(){
@@ -66,6 +66,6 @@ class OrderItemController extends Controller
 
         session()->forget('cart');
 
-        return redirect()->route('orders.showProducts')->with('success', 'Order placed successfully');
+        return redirect()->route('orders.showProducts')->with('status', 'Order placed successfully');
     }
 }

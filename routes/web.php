@@ -8,9 +8,6 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
-use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\Product;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,7 +25,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('/dashboard',[DashboardController::class,'index']
-            )->middleware(['auth','verified'])->name('dashboard');
+            )->middleware(['auth','admin'])->name('dashboard');
 
 
 Route::middleware(['auth','admin'])->group(function(){
@@ -65,7 +62,7 @@ Route::get('/filter', [OrderController::class, 'filterByStatus'])->name('orders.
 });
 
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth','admin'])->group(function(){
 Route::get('/orders/products', [OrderItemController::class, 'showProducts'])->name('orders.showProducts');
 Route::post('orders/{productId}/add-to-cart', [OrderItemController::class, 'addToCart'])->name('orders.addToCart');
 Route::get('/orders/cart',[OrderItemController::class,'showCart'])->name('orders.cart');

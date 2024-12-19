@@ -54,6 +54,6 @@ class CategoryController extends Controller
         $deleteData = Category::findOrFail($id);
         $deleteData->delete();
 
-        return response()->json(['success'=>'Record Deleted Successfully!']);
+        return response()->json(['status'=>'Record Deleted Successfully!']);
     }
 }

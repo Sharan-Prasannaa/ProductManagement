@@ -6,9 +6,9 @@
     </x-slot>
 
     <div class="container mx-auto py-12">
-        @if (session('success'))
+        @if (session('status'))
             <div class="alert alert-success">
-                {{ session('success') }}
+                {{ session('status') }}
             </div>
         @endif
         <div class="mb-4">
