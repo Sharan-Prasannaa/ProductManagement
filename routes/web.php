@@ -6,6 +6,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderItemController;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 
 Route::get('/', function () {
@@ -22,9 +26,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
 Route::get('/dashboard',[DashboardController::class,'index']
             )->middleware(['auth','verified'])->name('dashboard');
 
+
+Route::middleware(['auth','admin'])->group(function(){
 Route::get('/categories',[CategoryController::class,'index'])->name('categories');
 Route::get('/categories/add',[CategoryController::class,'create'])->name('categories.add');
 Route::post('/categories/check-name',[CategoryController::class,'checkName'])->name('categories.check-name');
@@ -49,5 +56,20 @@ Route::put('/products{id}/update',[ProductController::class,'update'])->name('pr
 Route::get('/products/{id}/delete',[ProductController::class,'destroy'])->name('products.destroy');
 Route::get('/products/filter',[ProductController::class,'filter'])->name('products.filter');
 
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+
+
+Route::get('/order/{orderId}', [OrderController::class, 'show'])->name('orders.show');
+Route::put('/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+Route::get('/filter', [OrderController::class, 'filterByStatus'])->name('orders.filterByStatus');
+});
+
+
+Route::middleware(['auth'])->group(function(){
+Route::get('/orders/products', [OrderItemController::class, 'showProducts'])->name('orders.showProducts');
+Route::post('orders/{productId}/add-to-cart', [OrderItemController::class, 'addToCart'])->name('orders.addToCart');
+Route::get('/orders/cart',[OrderItemController::class,'showCart'])->name('orders.cart');
+Route::post('orders/checkout', [OrderItemController::class, 'checkout'])->name('orders.checkout');
+});
 
 require __DIR__.'/auth.php';

@@ -43,14 +43,5 @@
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-               style="border: 2px solid black; padding: 4px;"
-               href="{{ route('register') }}">
-                {{ __('Not a User. Click To Register') }}
-            </a>
-        </div>
-
     </form>
 </x-guest-layout>
